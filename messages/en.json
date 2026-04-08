@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "catalog": "Catalog",
+    "packs": "Packs",
+    "admin": "Admin",
+    "search": "Search resources...",
+    "github": "GitHub"
+  },
+  "hero": {
+    "badge": "The #1 AI Hub of 2026",
+    "title": "The Definitive Arsenal for",
+    "titleHighlight": "AI Agents",
+    "subtitle": "Download, audit and install Agent Skills, MCP Prompts and Cursor Rules. Hybrid semantic search, automatic OWASP auditing and instant ZIP downloads.",
+    "cta_explore": "Explore Catalog",
+    "cta_admin": "Admin Panel",
+    "stats_resources": "Resources",
+    "stats_downloads": "Downloads",
+    "stats_sources": "Sources",
+    "stats_security": "Security Score"
+  },
+  "catalog": {
+    "title": "Full Catalog",
+    "subtitle": "Explore and download the best resources for your agents",
+    "filters": {
+      "all_types": "All types",
+      "all_categories": "All categories",
+      "skill": "Agent Skill",
+      "mcp_prompt": "MCP Prompt",
+      "cursor_rule": "Cursor Rule",
+      "prompt": "Prompt"
+    },
+    "sort": {
+      "downloads": "Most downloaded",
+      "newest": "Newest",
+      "security": "Best security",
+      "name": "Name A-Z"
+    },
+    "no_results": "No resources found for your search",
+    "loading": "Loading resources..."
+  },
+  "resource": {
+    "download_claude": "Download for Claude",
+    "download_cursor": "Download for Cursor",
+    "download_gemini": "Download for Gemini",
+    "download_raw": "Download raw file",
+    "copy_content": "Copy content",
+    "copied": "Copied!",
+    "cli_install": "Install via CLI",
+    "security_badge": "Security",
+    "security_clean": "Clean",
+    "security_low": "Low risk",
+    "security_medium": "Medium risk",
+    "security_high": "High risk",
+    "security_critical": "Critical",
+    "downloads": "downloads",
+    "version": "Version",
+    "category": "Category",
+    "tags": "Tags",
+    "source": "Source",
+    "compatible": "Compatible with"
+  },
+  "packs": {
+    "title": "Thematic Packs",
+    "subtitle": "Curated collections ready to install with one click",
+    "download_all": "Download Full Pack",
+    "resources_count": "resources"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "dashboard": "Dashboard",
+    "import": "Auto-Import",
+    "resources": "Resources",
+    "logs": "Logs",
+    "security": "Security",
+    "stats": "Stats",
+    "import_now": "Import Now",
+    "import_running": "Importing...",
+    "approve": "Approve",
+    "reject": "Reject",
+    "quarantine": "Quarantine",
+    "publish": "Publish",
+    "rollback": "Rollback"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "back": "Back",
+    "new": "New",
+    "search": "Search",
+    "filter": "Filter"
+  }
+}

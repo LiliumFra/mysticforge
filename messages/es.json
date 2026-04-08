@@ -1,0 +1,99 @@
+{
+  "nav": {
+    "catalog": "Catálogo",
+    "packs": "Packs",
+    "admin": "Admin",
+    "search": "Buscar recursos...",
+    "github": "GitHub"
+  },
+  "hero": {
+    "badge": "El Hub IA #1 de 2026",
+    "title": "El Arsenal Definitivo para",
+    "titleHighlight": "Agentes de IA",
+    "subtitle": "Descarga, audita e instala Agent Skills, MCP Prompts y Cursor Rules. Búsqueda semántica híbrida, auditoría OWASP automática y descargas ZIP instantáneas.",
+    "cta_explore": "Explorar Catálogo",
+    "cta_admin": "Panel Admin",
+    "stats_resources": "Recursos",
+    "stats_downloads": "Descargas",
+    "stats_sources": "Fuentes",
+    "stats_security": "Score Seguridad"
+  },
+  "catalog": {
+    "title": "Catálogo Completo",
+    "subtitle": "Explora y descarga los mejores recursos para tus agentes",
+    "filters": {
+      "all_types": "Todos los tipos",
+      "all_categories": "Todas las categorías",
+      "skill": "Agent Skill",
+      "mcp_prompt": "MCP Prompt",
+      "cursor_rule": "Cursor Rule",
+      "prompt": "Prompt"
+    },
+    "sort": {
+      "downloads": "Más descargados",
+      "newest": "Más nuevos",
+      "security": "Mejor seguridad",
+      "name": "Nombre A-Z"
+    },
+    "no_results": "No encontramos recursos para tu búsqueda",
+    "loading": "Cargando recursos..."
+  },
+  "resource": {
+    "download_claude": "Descargar para Claude",
+    "download_cursor": "Descargar para Cursor",
+    "download_gemini": "Descargar para Gemini",
+    "download_raw": "Descargar archivo raw",
+    "copy_content": "Copiar contenido",
+    "copied": "¡Copiado!",
+    "cli_install": "Instalar por CLI",
+    "security_badge": "Seguridad",
+    "security_clean": "Limpio",
+    "security_low": "Riesgo bajo",
+    "security_medium": "Riesgo medio",
+    "security_high": "Riesgo alto",
+    "security_critical": "Crítico",
+    "downloads": "descargas",
+    "version": "Versión",
+    "category": "Categoría",
+    "tags": "Etiquetas",
+    "source": "Fuente",
+    "compatible": "Compatible con"
+  },
+  "packs": {
+    "title": "Packs Temáticos",
+    "subtitle": "Colecciones curadas listas para instalar con un clic",
+    "download_all": "Descargar Pack Completo",
+    "resources_count": "recursos"
+  },
+  "admin": {
+    "title": "Panel de Administración",
+    "dashboard": "Dashboard",
+    "import": "Auto-Import",
+    "resources": "Recursos",
+    "logs": "Logs",
+    "security": "Seguridad",
+    "stats": "Estadísticas",
+    "import_now": "Importar Ahora",
+    "import_running": "Importando...",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "quarantine": "Poner en Cuarentena",
+    "publish": "Publicar",
+    "rollback": "Rollback"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Reintentar",
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "back": "Volver",
+    "new": "Nuevo",
+    "search": "Buscar",
+    "filter": "Filtrar"
+  }
+}
