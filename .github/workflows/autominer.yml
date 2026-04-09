@@ -1,0 +1,62 @@
+name: "MysticForge Auto-Miner"
+on:
+  schedule:
+    - cron: '0 */3 * * *' # Every 3 hours
+  workflow_dispatch:      # Allow manual trigger
+
+jobs:
+  mine-and-import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-Discovery & Import Dispatch
+        uses: actions/github-script@v7
+        env:
+          APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'https://mysticforge-j2hsk3wnt.vercel.app' }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        with:
+          script: |
+            const APP_URL = process.env.APP_URL;
+            const TOKEN = process.env.PAT_TOKEN;
+            
+            if (!TOKEN) {
+              console.error("PAT_TOKEN secret is missing. Please add it to your GitHub Repository Secrets.");
+              process.exit(1);
+            }
+            
+            console.log("1. Searching for MCP, Agent Skills and Cursor Rules on GitHub...");
+            const query = 'topic:mcp OR topic:cursor-rules OR topic:claude-skills OR topic:agent-skills';
+            
+            const { data } = await github.rest.search.repos({
+              q: query,
+              sort: 'updated',
+              per_page: 15
+            });
+            
+            console.log(`=> Found ${data.items.length} mining targets`);
+            
+            console.log("2. Dispatching targets to MysticForge Engine...");
+            const headers = {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${TOKEN}`
+            };
+            
+            for (const repo of data.items) {
+               console.log(`Processing: ${repo.full_name}`);
+               try {
+                 const res = await fetch(`${APP_URL}/api/cron/automine`, {
+                   method: 'POST',
+                   headers,
+                   body: JSON.stringify({
+                     owner: repo.owner.login,
+                     repo: repo.name,
+                     default_branch: repo.default_branch
+                   })
+                 });
+                 const json = await res.json();
+                 console.log(`Response for ${repo.name}:`, JSON.stringify(json));
+               } catch (err) {
+                 console.error(`Failed pushing ${repo.name}:`, err.message);
+               }
+            }
+            
+            console.log("Mining cycle completed.");
