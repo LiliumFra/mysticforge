@@ -11,11 +11,7 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'giohgsedijmoiiolvuxm.supabase.co' },
     ],
   },
-  // Don't double-compress when behind Vercel/Cloudflare CDN
   compress: false,
-  experimental: {
-    after: true,
-  },
 }
 
 export default withNextIntl(nextConfig)
