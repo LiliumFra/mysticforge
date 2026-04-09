@@ -44,7 +44,10 @@ export default function ImportPage() {
     }
   }
 
-  useEffect(() => { fetchData() }, [])
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+    fetchData().catch(console.error)
+  }, [])
 
   async function runImport(sourceId?: string) {
     setImporting(true)

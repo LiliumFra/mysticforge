@@ -71,11 +71,12 @@ export default async function HomePage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 glass-card rounded-2xl">
-            <p className="text-[#5A6B8C] mb-4">No hay recursos aún. Configura tu GitHub Token para el auto-import.</p>
-            <Link href="/admin/import" className="btn-cyber px-4 py-2 rounded-lg text-sm inline-block">
-              Ir al Admin → Import
-            </Link>
+          <div className="text-center py-16 glass-card rounded-2xl flex items-center justify-center flex-col min-h-[300px]">
+            <Package className="w-12 h-12 text-[#3D4A6B] mb-4" />
+            <h3 className="text-[#F0F4FF] font-semibold text-lg mb-2">Sincronizando Recursos</h3>
+            <p className="text-[#5A6B8C] text-sm max-w-md">
+              El motor automático está recolectando actualmente las mejores Agent Skills y MCP Prompts. Por favor, vuelve más tarde.
+            </p>
           </div>
         )}
       </section>

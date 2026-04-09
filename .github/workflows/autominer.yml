@@ -1,47 +1,95 @@
 name: "MysticForge Auto-Miner"
 on:
   schedule:
-    - cron: '0 */3 * * *' # Every 3 hours
-  workflow_dispatch:      # Allow manual trigger
+    - cron: '0 */3 * * *' # Cada 3 horas automagicamente
+  workflow_dispatch:      # Trigger manual
 
 jobs:
   mine-and-import:
     runs-on: ubuntu-latest
     steps:
-      - name: Auto-Discovery & Import Dispatch
+      - name: Auto-Discovery & Import Dispatch (Zero-Config)
         uses: actions/github-script@v7
         env:
-          APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'https://mysticforge-j2hsk3wnt.vercel.app' }}
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          MY_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || secrets.VERCEL_URL || '' }}
+          API_SECRET: ${{ secrets.CRON_SECRET || secrets.GITHUB_TOKEN }}
         with:
           script: |
-            const APP_URL = process.env.APP_URL;
-            const TOKEN = process.env.PAT_TOKEN;
-            
-            if (!TOKEN) {
-              console.error("PAT_TOKEN secret is missing. Please add it to your GitHub Repository Secrets.");
-              process.exit(1);
+            // 1. Detectar URL dinámicamente si no hay env explícito
+            let APP_URL = process.env.MY_URL;
+            if (!APP_URL) {
+              console.log("No URL secret found. Attempting to discover Vercel Deployment URL...");
+              const { data: deployments } = await github.rest.repos.listDeployments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                environment: 'Production',
+                per_page: 1
+              });
+              
+              if (deployments && deployments.length > 0) {
+                const { data: statuses } = await github.rest.repos.listDeploymentStatuses({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  deployment_id: deployments[0].id
+                });
+                const successStatus = statuses.find(s => s.state === 'success');
+                if (successStatus && successStatus.environment_url) {
+                  APP_URL = successStatus.environment_url;
+                  console.log(`=> Discovered Vercel URL dynamically: ${APP_URL}`);
+                }
+              }
             }
             
-            console.log("1. Searching for MCP, Agent Skills and Cursor Rules on GitHub...");
-            const query = 'topic:mcp OR topic:cursor-rules OR topic:claude-skills OR topic:agent-skills';
+            // Fallback hardcode de tu Vercel (si lo tienes)
+            if (!APP_URL) APP_URL = 'https://mysticforge-j2hsk3wnt.vercel.app';
             
-            const { data } = await github.rest.search.repos({
-              q: query,
-              sort: 'updated',
-              per_page: 15
-            });
+            // Limpieza de URL
+            APP_URL = APP_URL.replace(/\/$/, '');
             
-            console.log(`=> Found ${data.items.length} mining targets`);
+            console.log("1. Buscando recursos MCP, Agent Skills y Cursor Rules de la comunidad...");
+            const topics = ['mcp', 'cursor-rules', 'claude-skills', 'agent-skills'];
+            let discoveredItems = [];
             
-            console.log("2. Dispatching targets to MysticForge Engine...");
+            for (const t of topics) {
+              try {
+                const { data } = await github.rest.search.repos({
+                  q: `topic:${t}`,
+                  sort: 'updated',
+                  per_page: 5
+                });
+                discoveredItems.push(...data.items);
+              } catch (e) {
+                console.log(`Error buscando topico ${t}:`, e.message);
+              }
+            }
+            
+            // Eliminar duplicados
+            const uniqueDiscovered = Array.from(new Map(discoveredItems.map(item => [item.full_name, item])).values());
+            
+            console.log(`=> Se encontraron ${uniqueDiscovered.length} repositorios orgánicos nuevos.`);
+            
+            console.log("2. Enviando objetivos al Motor Vercel (MysticForge)...");
+            // Autenticaremos usando el CRON_SECRET oficial si existe, o el propio GITHUB_TOKEN nativo como fallback.
             const headers = {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${TOKEN}`
+              'Authorization': `Bearer ${process.env.API_SECRET}`
             };
             
-            for (const repo of data.items) {
-               console.log(`Processing: ${repo.full_name}`);
+            const targetRepos = [
+              { owner: { login: 'OWASP' }, name: 'www-project-agentic-skills-top-10', default_branch: 'main', full_name: 'OWASP/www-project-agentic-skills-top-10' },
+              { owner: { login: 'snyk' }, name: 'agent-scan', default_branch: 'main', full_name: 'snyk/agent-scan' },
+              { owner: { login: 'cisco-ai-defense' }, name: 'skill-scanner', default_branch: 'main', full_name: 'cisco-ai-defense/skill-scanner' },
+              { owner: { login: 'agentskills' }, name: 'agentskills', default_branch: 'main', full_name: 'agentskills/agentskills' },
+              { owner: { login: 'anthropics' }, name: 'skills', default_branch: 'main', full_name: 'anthropics/skills' },
+              { owner: { login: 'modelcontextprotocol' }, name: 'registry', default_branch: 'main', full_name: 'modelcontextprotocol/registry' },
+              { owner: { login: 'modelcontextprotocol' }, name: 'servers', default_branch: 'main', full_name: 'modelcontextprotocol/servers' }
+            ];
+            
+            // Unimos los encontrados automáticamente + los asegurados obligatorios.
+            const allTargets = [...targetRepos, ...uniqueDiscovered];
+
+            for (const repo of allTargets) {
+               console.log(`Procesando: ${repo.full_name}`);
                try {
                  const res = await fetch(`${APP_URL}/api/cron/automine`, {
                    method: 'POST',
@@ -52,11 +100,22 @@ jobs:
                      default_branch: repo.default_branch
                    })
                  });
-                 const json = await res.json();
-                 console.log(`Response for ${repo.name}:`, JSON.stringify(json));
+                 const text = await res.text();
+                 try {
+                   console.log(`Respuesta para ${repo.name}:`, JSON.parse(text));
+                 } catch {
+                   console.log(`Respuesta raw para ${repo.name}:`, text);
+                 }
                } catch (err) {
-                 console.error(`Failed pushing ${repo.name}:`, err.message);
+                 console.error(`Fallo disparando ${repo.name}:`, err.message);
                }
             }
             
-            console.log("Mining cycle completed.");
+            console.log("Ciclo de Minería completado.");
+            
+      - name: Keep GitHub Actions Alive
+        uses: gautamkrishnar/keepalive-workflow@v2
+        with:
+          committer_name: "MysticForge Bot"
+          committer_email: "bot@mysticforge.ai"
+          time_elapsed: 50

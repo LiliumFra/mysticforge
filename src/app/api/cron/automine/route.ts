@@ -3,10 +3,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { importFromSource } from '@/lib/import/auto-import'
 
 export async function POST(request: NextRequest) {
-  // Validate token sent from GitHub Actions
-  const authHeader = request.headers.get('authorization')
-  if (process.env.NODE_ENV !== 'development' && authHeader !== `Bearer ${process.env.GITHUB_TOKEN}`) {
-    return NextResponse.json({ error: 'Unauthorized CRON trigger' }, { status: 401 })
+  // Validate token sent from GitHub Actions or Vercel Cron
+  const authHeader = request.headers.get('authorization');
+  const token = authHeader?.replace('Bearer ', '');
+  const isValidCronSecret = process.env.CRON_SECRET && token === process.env.CRON_SECRET;
+  const isValidGitHubToken = process.env.GITHUB_TOKEN && token === process.env.GITHUB_TOKEN;
+
+  // We bypass auth in development, but in prod we require either the Vercel CRON_SECRET or the PAT (GITHUB_TOKEN)
+  if (process.env.NODE_ENV !== 'development' && !isValidCronSecret && !isValidGitHubToken) {
+    return NextResponse.json({ error: 'Unauthorized CRON trigger' }, { status: 401 });
   }
 
   const supabase = await createAdminClient()

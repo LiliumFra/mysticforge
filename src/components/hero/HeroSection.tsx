@@ -77,15 +77,15 @@ export function HeroSection({ stats }: { stats: Stats }) {
       {/* Radial gradient overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(139,92,246,0.15)_0%,transparent_60%)]" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(0,255,194,0.3)] bg-[rgba(0,255,194,0.06)] text-[#00FFC2] text-sm font-medium mb-8"
+          className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[rgba(0,255,194,0.3)] bg-[rgba(0,255,194,0.06)] text-[#00FFC2] text-xs sm:text-sm font-medium mb-8 backdrop-blur-md"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00FFC2] animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-[#00FFC2] animate-pulse shadow-[0_0_8px_#00FFC2]" />
           {t('badge')}
         </motion.div>
 
@@ -94,10 +94,10 @@ export function HeroSection({ stats }: { stats: Stats }) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight mb-6 leading-[1.05]"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-[1.1] sm:leading-[1.05]"
         >
           {t('title')}{' '}
-          <span className="gradient-text-hero block sm:inline">{t('titleHighlight')}</span>
+          <span className="gradient-text-hero block sm:inline mt-2 sm:mt-0">{t('titleHighlight')}</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -105,7 +105,7 @@ export function HeroSection({ stats }: { stats: Stats }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.25 }}
-          className="text-[#9BABC8] text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-[#9BABC8] text-base sm:text-lg lg:text-xl max-w-2xl mx-auto mb-10 leading-relaxed px-4"
         >
           {t('subtitle')}
         </motion.p>
@@ -115,14 +115,14 @@ export function HeroSection({ stats }: { stats: Stats }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="flex flex-wrap items-center justify-center gap-4 mb-16"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 px-4"
         >
-          <Link href="/catalog" className="group flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#00FFC2] to-[#00D4FF] text-black font-bold text-base hover:opacity-90 transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(0,255,194,0.4)]">
+          <Link href="/catalog" className="w-full sm:w-auto group flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-[#00FFC2] to-[#00D4FF] text-black font-bold text-sm sm:text-base hover:opacity-90 transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(0,255,194,0.4)]">
             <Search className="w-4 h-4" />
             {t('cta_explore')}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <Link href="/packs" className="flex items-center gap-2 px-6 py-3 rounded-xl btn-cyber text-base">
+          <Link href="/packs" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl btn-cyber text-sm sm:text-base">
             <Download className="w-4 h-4" />
             Ver Packs
           </Link>
@@ -133,7 +133,7 @@ export function HeroSection({ stats }: { stats: Stats }) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.45 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto px-2"
         >
           <StatCard
             value={stats.total_resources}
@@ -164,7 +164,7 @@ export function HeroSection({ stats }: { stats: Stats }) {
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#0D0F14] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#0D0F14] to-transparent pointer-events-none" />
     </section>
   )
 }

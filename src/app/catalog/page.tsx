@@ -77,7 +77,10 @@ export default function CatalogPage() {
     setLoading(false)
   }, [search, type, category, sort, offset])
 
-  useEffect(() => { fetchResources(true) }, [search, type, category, sort])
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
+    fetchResources(true).catch(console.error)
+  }, [search, type, category, sort])
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -178,7 +181,7 @@ export default function CatalogPage() {
       {!loading && (
         <p className="text-sm text-[#9BABC8] mb-4">
           {total > 0 ? `${total.toLocaleString()} recursos encontrados` : 'Sin resultados'}
-          {search && <span className="text-[#00FFC2]"> para "{search}"</span>}
+          {search && <span className="text-[#00FFC2]"> para &quot;{search}&quot;</span>}
         </p>
       )}
 
