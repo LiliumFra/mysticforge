@@ -31,9 +31,6 @@ export function Navbar() {
     if (search.trim()) router.push(`/catalog?q=${encodeURIComponent(search)}`)
   }
 
-  const isAdmin = user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL || 
-    (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').includes(user?.email || '')
-
   return (
     <motion.header
       initial={{ y: -80 }}
@@ -73,12 +70,6 @@ export function Navbar() {
           <nav className="hidden md:flex items-center gap-1">
             <NavLink href="/catalog">{t('catalog')}</NavLink>
             <NavLink href="/packs">{t('packs')}</NavLink>
-            {isAdmin && (
-              <NavLink href="/admin">
-                <Shield className="w-3.5 h-3.5 mr-1" />
-                {t('admin')}
-              </NavLink>
-            )}
             <LocaleToggle />
             {user && (
               <button
@@ -123,7 +114,6 @@ export function Navbar() {
               </form>
               <Link href="/catalog" className="block py-2 text-[#9BABC8] hover:text-[#00FFC2]">{t('catalog')}</Link>
               <Link href="/packs" className="block py-2 text-[#9BABC8] hover:text-[#00FFC2]">{t('packs')}</Link>
-              {isAdmin && <Link href="/admin" className="block py-2 text-[#9BABC8] hover:text-[#00FFC2]">{t('admin')}</Link>}
             </div>
           </motion.div>
         )}
