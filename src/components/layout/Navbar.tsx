@@ -80,17 +80,13 @@ export function Navbar() {
               </NavLink>
             )}
             <LocaleToggle />
-            {user ? (
+            {user && (
               <button
                 onClick={() => supabase.auth.signOut()}
                 className="ml-2 text-sm text-[#9BABC8] hover:text-[#00FFC2] transition-colors px-3 py-1.5"
               >
                 Sign out
               </button>
-            ) : (
-              <Link href="/auth" className="ml-2 btn-cyber px-4 py-1.5 rounded-lg text-sm">
-                Sign in
-              </Link>
             )}
           </nav>
 
