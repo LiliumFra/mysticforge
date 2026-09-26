@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# MysticForge
 
-First, run the development server:
+**A curated hub for Agent Skills, MCP prompts and editor rules — with security-aware discovery and ready-to-use packs.**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+[Live site](https://mysticforge-six.vercel.app) · [Browse the catalog](https://mysticforge-six.vercel.app/catalog)
+
+</div>
+
+---
+
+## What it is
+
+MysticForge helps developers discover, evaluate and reuse resources for AI-agent workflows without digging through scattered repositories.
+
+The platform indexes resources such as **Agent Skills**, **MCP prompts** and **Cursor/editor rules**, adds structured metadata and security signals, and exposes them through a searchable catalog and curated packs.
+
+## Product highlights
+
+| Area | What MysticForge provides |
+| --- | --- |
+| **Discovery** | Searchable catalog with categories, tags and popularity signals |
+| **Security context** | Automated security scoring and quarantine support for suspicious resources |
+| **Curated packs** | Thematic collections that group compatible resources |
+| **Resource pages** | Dedicated pages with metadata, source information and download actions |
+| **Internationalization** | Locale-aware UI powered by `next-intl` |
+| **Fresh data** | Server-rendered data with short revalidation windows |
+| **Administration** | Internal publishing and curation workflows |
+
+## Stack
+
+- **Next.js 16** with the App Router
+- **React 19**
+- **TypeScript**
+- **Supabase**
+- **Tailwind CSS 4**
+- **Radix UI / shadcn**
+- **Framer Motion**
+- **next-intl**
+- **Octokit**
+- **Zod**
+- **Shiki**
+
+## Architecture
+
+```text
+src/
+├── app/
+│   ├── admin/        # curation and administration
+│   ├── api/          # server endpoints
+│   ├── catalog/      # discovery and resource detail pages
+│   ├── packs/        # curated collections
+│   └── page.tsx      # landing page
+├── components/       # product UI
+├── i18n/             # localization
+└── lib/              # Supabase and shared application logic
+
+supabase/              # database-side resources and migrations
+messages/              # locale message catalogs
+scripts/               # repository utilities
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Local development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Requirements: a recent Node.js release and the environment variables required by the Supabase integration.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone https://github.com/LiliumFra/mysticforge.git
+cd mysticforge
+npm install
+npm run dev
+```
 
-## Learn More
+Then open `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+Useful checks:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Security model
 
-## Deploy on Vercel
+MysticForge treats third-party agent resources as **untrusted input**. The product includes security scoring and quarantine concepts so discovery does not imply trust.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Before using any downloaded resource in a privileged environment, review its source, permissions, instructions and external dependencies.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Repository status
+
+MysticForge is under active development. The public repository contains the web application; production data and deployment credentials are intentionally kept outside source control.
+
+---
+
+<div align="center">
+
+Built as a practical directory for the rapidly growing AI-agent ecosystem.
+
+</div>
