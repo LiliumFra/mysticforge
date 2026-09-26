@@ -1,10 +1,16 @@
 <div align="center">
 
+<img src="./docs/readme-banner.svg" alt="MysticForge — security-aware AI agent resource discovery" width="100%" />
+
+</div>
+
+<div align="center">
+
 # MysticForge
 
 **A curated hub for Agent Skills, MCP prompts and editor rules — with security-aware discovery and ready-to-use packs.**
 
-[Live site](https://mysticforge-six.vercel.app) · [Browse the catalog](https://mysticforge-six.vercel.app/catalog)
+[Live site](https://mysticforge-six.vercel.app) · [Catalog](https://mysticforge-six.vercel.app/catalog) · [Architecture](#architecture) · [Security](#security-model)
 
 </div>
 
